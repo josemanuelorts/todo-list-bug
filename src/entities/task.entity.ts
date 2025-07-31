@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 
 @Entity('tasks')
@@ -19,5 +19,9 @@ export class Task {
     dueDate: string;
 
     @ManyToOne(() => User, (user) => user.tasks)
+    @JoinColumn({ name: 'ownerId' })
     owner: User;
+
+    @Column()
+    ownerId: string;
 }
