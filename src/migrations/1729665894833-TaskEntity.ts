@@ -13,3 +13,4 @@ export class TaskEntity1729665894833 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "tasks"`);
     }
 }
+    

@@ -7,6 +7,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
+    findAll() {
+        this.logger.log('Fetching all users');
+        return this.usersRepository.find();
+    }
     private readonly logger = new Logger(UsersService.name);
     constructor(
         @InjectRepository(User)

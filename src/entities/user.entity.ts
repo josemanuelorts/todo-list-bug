@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Task } from './task.entity';
+import { RouterModule } from '@nestjs/core';
 
 @Entity('users')
 export class User {
@@ -18,4 +19,8 @@ export class User {
 
     @OneToMany(() => Task, (task) => task.owner)
     tasks: Task[];
+
+    @Column({ default: 'user' })
+    role: string;
+
 }
