@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,18 +13,18 @@ export class UsersService {
         private readonly usersRepository: Repository<User>,
     ) {}
 
-    async create(body: any) {
-        this.logger.log(`Creating user with email: ${body.email}`);
+    async create(createUserDto: CreateUserDto) {
+        this.logger.log(`Creating user with email: ${createUserDto.email}`);
 
         const user = new User();
-        user.email = body.email;
+        user.email = createUserDto.email;
         const saltRounds = 10;
-        user.pass = await bcrypt.hash(body.password, saltRounds);
-        user.fullname = body.fullname;
+        user.pass = await bcrypt.hash(createUserDto.password, saltRounds);
+        user.fullname = createUserDto.fullname;
 
         await this.usersRepository.save(user);
 
-        this.logger.log(`User created with email: ${body.email} and id: ${user.id}`);
+        this.logger.log(`User created with email: ${createUserDto.email} and id: ${user.id}`);
 
         return user;
     }
